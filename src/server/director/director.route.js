@@ -20,6 +20,7 @@ router.get('/', (req, res) => {
 
 router.get('/:directorId', (req, res) => {
   Director.findById(req.params.directorId)
+    .populate('movies')
     .then((director) => {
       if (director) {
         res.status(200).send(director);
