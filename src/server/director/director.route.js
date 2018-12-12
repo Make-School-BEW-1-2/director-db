@@ -18,4 +18,18 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/:directorId', (req, res) => {
+  Director.findById(req.params.directorId)
+    .then((director) => {
+      if (director) {
+        res.status(200).send(director);
+      } else {
+        res.status(404).send('Director not found');
+      }
+    }).catch((err) => {
+      console.error(err);
+      res.status(400).send(err);
+    });
+});
+
 module.exports = router;
