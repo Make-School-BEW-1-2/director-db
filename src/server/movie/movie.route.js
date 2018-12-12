@@ -40,4 +40,33 @@ router.post('/new', (req, res) => {
     });
 });
 
+// PUT: Add an additional director to a movie
+router.put('/:movieId/:newDirectorId', (req, res) => {
+  Director.findById(req.params.newDirectorId)
+    .then((newDirector) => {
+      if (newDirector) {
+        Movie.findById(req.params.movieId)
+          .then((movie) => {
+            if (movie) {
+              movie.directors.unshift(newDirector);
+              movie.markModified('directors');
+              movie.save();
+              newDirector.movies.unshift(movie);
+              newDirector.markModified('movies');
+            } else {
+              throw new Error('Movie doesn\'t exist');
+            }
+          }).catch((err) => {
+            console.error(err);
+            res.status(400).send(err);
+          });
+      } else {
+        throw new Error('The Director doesn\'t exist');
+      }
+    }).catch((err) => {
+      console.error(err);
+      res.status(400).send(err);
+    });
+});
+
 module.exports = router;
