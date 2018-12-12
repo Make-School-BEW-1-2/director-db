@@ -29,11 +29,21 @@ router.post('/new', (req, res) => {
   Director.findById(req.params.directorId)
     .then((director) => {
       newMovie.directors.unshift(director);
-      newMovie.save();
-      director.movies.unshift(newMovie);
-      director.markModified('movies');
-      director.save();
-      res.status(200).send(director);
+      newMovie.save()
+        .then((movie) => {
+          director.movies.unshift(movie);
+          director.markModified('movies');
+          director.save()
+            .then(() => {
+              res.status(200).send(director);
+            }).catch((err) => {
+              console.error(err);
+              res.status(400).send(err);
+            });
+        }).catch((err) => {
+          console.error(err);
+          res.status(400).send(err);
+        });
     }).catch((err) => {
       console.error(err);
       res.status(400).send(err);
