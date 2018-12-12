@@ -4,9 +4,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  createdAt: {
-    type: Date
-  },
   username: {
     type: String,
     required: true
