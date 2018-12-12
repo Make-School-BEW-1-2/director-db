@@ -18,6 +18,7 @@ router.get('/', (req, res) => {
     });
 });
 
+// GET: Index a specific director
 router.get('/:directorId', (req, res) => {
   Director.findById(req.params.directorId)
     .populate('movies')
@@ -27,6 +28,18 @@ router.get('/:directorId', (req, res) => {
       } else {
         res.status(404).send('Director not found');
       }
+    }).catch((err) => {
+      console.error(err);
+      res.status(400).send(err);
+    });
+});
+
+// POST: Create a new director
+router.post('/new', (req, res) => {
+  const newDirector = new Director(req.body);
+  newDirector.save()
+    .then((director) => {
+      res.status(200).send(director);
     }).catch((err) => {
       console.error(err);
       res.status(400).send(err);
