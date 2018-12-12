@@ -4,14 +4,24 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const directorSchema = new Schema({
-  username: {
+  name: {
     type: String,
     required: true
   },
-  pass: {
+  lastName: {
     type: String,
     required: true
-  }
+  },
+  bio: {
+    type: String,
+  },
+  birthday: {
+    type: Date
+  },
+  movies: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Movie',
+  }]
 });
 
 module.exports = mongoose.model('Director', directorSchema);
