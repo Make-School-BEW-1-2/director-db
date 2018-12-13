@@ -12,6 +12,7 @@ router.use('/:directorId/movies', movieRouter);
 // GET: Index/read all directors
 router.get('/', (req, res) => {
   Director.find({})
+    .populate('movies')
     .then((directors) => {
       res.status(200).json(directors);
     }).catch((err) => {
