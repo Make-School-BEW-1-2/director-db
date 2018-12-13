@@ -4,6 +4,7 @@ const config = require('../../config/config');
 const bcrypt = require('bcryptjs');
 const User = require('./auth.model');
 
+
 function logUserIn(res, user) {
   const token = jwt.sign({
     _id: user.idea
@@ -14,7 +15,7 @@ function logUserIn(res, user) {
     maxAge: 900000,
     httpOnly: true
   });
-  res.send(200);
+  res.status(200).send();
 }
 
 function authUser(username, pass) {
@@ -31,8 +32,9 @@ function authUser(username, pass) {
               reject('wrong username or password');
             }
           });
+        } else {
+          reject('wrong username or password');
         }
-        reject('wrong username or password');
       }).catch((err) => {
         reject(err);
       });
@@ -51,7 +53,19 @@ function comparePassword(inputPass, pass) {
   });
 }
 
+function signUp(userData) {
+  return new Promise((resolve, reject) => {
+    const newUser = new User(userData);
+    newUser.save().then((user) => {
+      resolve(user);
+    }).catch((error) => {
+      reject(error);
+    });
+  });
+}
+
 module.exports = {
   logUserIn,
   authUser,
+  signUp
 };
