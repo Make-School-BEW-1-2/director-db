@@ -63,6 +63,8 @@ router.put('/:movieId/:newDirectorId', (req, res) => {
               movie.save();
               newDirector.movies.unshift(movie);
               newDirector.markModified('movies');
+              newDirector.save();
+              res.status(200).send(movie);
             } else {
               throw new Error('Movie doesn\'t exist');
             }
