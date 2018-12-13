@@ -11,7 +11,7 @@ router.route('/');
 router.get('/', (req, res) => {
   Director.find({})
     .then((directors) => {
-      res.status(200).send(directors);
+      res.status(200).json(directors);
     }).catch((err) => {
       console.error(err);
       res.status(400).send(err);
@@ -35,7 +35,7 @@ router.get('/:directorId', (req, res) => {
 });
 
 // POST: Create a new director
-router.post('/new', (req, res) => {
+router.post('/', (req, res) => {
   const newDirector = new Director(req.body);
   newDirector.save()
     .then((director) => {

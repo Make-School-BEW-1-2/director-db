@@ -8,10 +8,6 @@ const directorSchema = new Schema({
     type: String,
     required: true
   },
-  lastName: {
-    type: String,
-    required: true
-  },
   bio: {
     type: String,
   },
