@@ -25,7 +25,7 @@ describe('Director', () => {
   before((done) => {
     const user = {
       username: 'NotAUsername',
-      pass: 'thisisntit',
+      password: 'thisisntit',
     };
 
     agent

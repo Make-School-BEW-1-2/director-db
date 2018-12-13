@@ -7,7 +7,7 @@ const User = require('./auth.model');
 
 function logUserIn(res, user) {
   const token = jwt.sign({
-    _id: user.idea
+    _id: user.id
   }, config.jwtSecret, {
     expiresIn: '60 days'
   });
@@ -18,14 +18,14 @@ function logUserIn(res, user) {
   res.status(200).send();
 }
 
-function authUser(username, pass) {
+function authUser(username, password) {
   return new Promise((resolve, reject) => {
     User.findOne({
       username
     })
       .then((user) => {
         if (user) {
-          comparePassword(pass, user.pass).then((match) => {
+          comparePassword(password, user.password).then((match) => {
             if (match) {
               resolve(user);
             } else {
@@ -41,9 +41,9 @@ function authUser(username, pass) {
   });
 }
 
-function comparePassword(inputPass, pass) {
+function comparePassword(inputPass, password) {
   return new Promise((resolve, reject) => {
-    bcrypt.compare(inputPass, pass, (err, isMatch) => {
+    bcrypt.compare(inputPass, password, (err, isMatch) => {
       if (err) {
         reject(err);
       } else {

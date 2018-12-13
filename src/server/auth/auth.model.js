@@ -8,25 +8,25 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  pass: {
+  password: {
     type: String,
     required: true
   }
 });
 
 userSchema.pre('save', function preSave(next) {
-  if (!this.isModified('pass')) {
+  if (!this.isModified('password')) {
     next();
   } else {
     bcrypt.genSalt(10, (saltError, salt) => {
       if (saltError) {
         next();
       }
-      bcrypt.hash(this.pass, salt, (hashError, hash) => {
+      bcrypt.hash(this.password, salt, (hashError, hash) => {
         if (hashError) {
           next();
         }
-        this.pass = hash;
+        this.password = hash;
         next();
       });
     });

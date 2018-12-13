@@ -14,13 +14,13 @@ chai.config.includeStack = true;
 describe('User', () => {
   const user = {
     username: 'NotAUsername',
-    pass: 'thisisntit',
+    password: 'thisisntit',
   };
 
 
   const badUser = {
     username: 'baduser',
-    pass: 'notpass'
+    password: 'notpass'
   };
 
   it('should not be able to login if they have not registered', (done) => {

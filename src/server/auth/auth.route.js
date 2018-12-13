@@ -17,7 +17,7 @@ router.post('/signup', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-  controller.authUser(req.body.username, req.body.pass)
+  controller.authUser(req.body.username, req.body.password)
     .then((user) => {
       controller.logUserIn(res, user);
     }).catch((err) => {
