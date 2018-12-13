@@ -26,7 +26,7 @@ describe('Movie', () => {
   before((done) => {
     const user = {
       username: 'NotAUsername',
-      pass: 'thisisntit',
+      password: 'thisisntit',
     };
 
     agent
@@ -70,7 +70,6 @@ describe('Movie', () => {
             return Director.findById(director._id).populate('movies');
           })
           .then((updatedDirector) => {
-            console.log('DIRECTOR:', updatedDirector);
             let found = false;
             for (let i = 0; i < updatedDirector.movies.length && !found; i += 1) {
               if (String(updatedDirector.movies[i].title) === movieData.title) {
