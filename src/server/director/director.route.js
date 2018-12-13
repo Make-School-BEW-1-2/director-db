@@ -1,9 +1,11 @@
 const express = require('express');
 const Director = require('./director.model');
+const movieRouter = require('../movie/movie.route');
 
 const router = express.Router(); // eslint-disable-line new-cap
 
 router.route('/');
+router.use('/:directorId/movies', movieRouter);
 
 // #TODO: Implement thing.route.js.
 

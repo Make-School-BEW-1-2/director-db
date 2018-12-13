@@ -2,7 +2,7 @@ const express = require('express');
 const Movie = require('./movie.model');
 const Director = require('../director/director.model');
 
-const router = express.Router(); // eslint-disable-line new-cap
+const router = express.Router({ mergeParams: true }); // eslint-disable-line new-cap
 
 router.route('/');
 
@@ -24,11 +24,11 @@ router.get('/:movieId', (req, res) => {
 });
 
 // POST: Create a new movie
-router.post('/new', (req, res) => {
+router.post('/', (req, res) => {
   const newMovie = new Movie(req.body);
   Director.findById(req.params.directorId)
     .then((director) => {
-      newMovie.directors.unshift(director);
+      newMovie.directors = [director._id];
       newMovie.save()
         .then((movie) => {
           director.movies.unshift(movie);
